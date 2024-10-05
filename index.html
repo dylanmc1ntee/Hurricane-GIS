@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HurricaneGIS</title>
@@ -8,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB34k6aJQrnKCeRdYnSd8lvIX7zMNrbqnY&libraries=drawing&callback=initMap" async defer></script>
     <script src="script.js" defer></script>
-</head><body>
+</head>
+<body>
     <header>
         <nav>
             <ul class="navbar">
@@ -19,13 +21,19 @@
                         <input type="text" id="location">
                     </div>
                 </li>
-                <li>Info</li>
+                <li id="signin">
+                    <a href="login.html">Login<i class="fa fa-sign-in" style="margin-left:0.25em"></i> </a>
+                </li>
+                <li id="about-toggle">About</li>
             </ul>
-        </nav>
-        <div id="about-panel">
-            Report flooding, debris, and other issues.
-        </div>
+        </nav>        
     </header>
+
+    <div id="about-panel">
+        <h3>Hurricane GIS</h3>
+        <p>HurricaneGIS allows communities to report and visualize incidents after natural disasters. Users can create pins on a global map to mark hazards like flooding and debris, adding descriptions and images for real-time updates.</p>
+    </div>
+
     <main>
         <div id="map"></div>
     
