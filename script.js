@@ -115,18 +115,6 @@ document.getElementById("pinForm").addEventListener("submit", function(e) {
     .catch(error => console.error("Error saving pin:", error));
 });
 
-
-/* FOR STYLING */
-
-/* function openAboutPanel() {
-    const aboutPanel = document.getElementById('about-panel');
-    if (aboutPanel.style.display === 'none' || aboutPanel.style.display === '') {
-        aboutPanel.style.display = 'block';
-    } else {
-        aboutPanel.style.display = 'none';
-    }
-} */
-
 // Close About
 function closeAbout() {
     const about = document.getElementById('about-panel');
@@ -135,7 +123,6 @@ function closeAbout() {
         about.style.transform = 'translateY(0)'; 
 
 }
-
 
 document.getElementById('about-toggle').addEventListener('click', function() {
     const about = document.getElementById('about-panel');
