@@ -3,19 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login</title>
+    <title>HurricaneGIS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh;
+        }
+
+
+    </style>
 </head>
 <body>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
+    <br>
+        <h1>HurricaneGIS</h1>
+        <div class="container">
+            <div id="login" class="tabcontent">
+                <h1>Log in</h1>
+                <form id="loginForm">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password</label>
+                    <input type="password">
+                    <a href="register.html">Not a user? Sign Up</a> <br>               
+                    <button type="submit">
+                        Log in
+                    </button>
+                </form>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
 
-        <button type="submit">Login</button>
-    </form>
+            </div>
+        </div>
 
     <script src="login.js"></script> <!-- Ensure script is loaded after the HTML -->
 </body>
