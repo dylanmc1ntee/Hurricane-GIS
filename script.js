@@ -17,7 +17,7 @@ function initMap() {
 
                 // Fetch and render pins from the database
                 fetchPins();
-
+                initAutocomplete();
                 // Map click event listener
                 map.addListener("click", (e) => {
                     clickLocation = e.latLng; // Store the clicked location
@@ -31,6 +31,32 @@ function initMap() {
     } else {
         handleLocationError(false);
     }
+}
+
+function initAutocomplete() {
+    const locationInput = document.getElementById('location');
+    
+    // Initialize Google Places Autocomplete
+    autocomplete = new google.maps.places.Autocomplete(locationInput);
+    
+    // Add a listener for when the user selects a place from the suggestions
+    autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+
+        if (place.geometry) {
+            // Move the map to the selected place and place a marker
+            map.setCenter(place.geometry.location);
+            map.setZoom(15);
+            
+            new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                title: place.formatted_address,
+            });
+        } else {
+            alert('No details available for the selected place.');
+        }
+    });
 }
 
 // Fetch pins from MongoDB and display them on the map
