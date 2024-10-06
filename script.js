@@ -69,11 +69,24 @@ document.querySelector(".close").onclick = function() {
 };
 
 // Add event listener for the form submit event, not the button
-document.getElementById("pinForm").addEventListener("submit", function(e) {
+document.getElementById("pinForm").addEventListener("submit", async function(e) {
     e.preventDefault(); // Prevent form from submitting the traditional way
-    
+
+    // Ensure that the map click location is set before submitting
+    if (!clickLocation) {
+        alert("Please select a location on the map first.");
+        return;
+    }
+
     const description = document.getElementById("description").value; // Get description from modal
-    
+    const token = localStorage.getItem('token');  // Get JWT token from localStorage
+
+    // Check if user is authenticated
+    if (!token) {
+        alert('You need to log in before adding a pin.');
+        return;
+    }
+
     // Prepare the pin data
     const pinData = {
         lat: clickLocation.lat(),  // Use the clickLocation's latitude
@@ -82,37 +95,50 @@ document.getElementById("pinForm").addEventListener("submit", function(e) {
     };
 
     // Send the pin data to the backend API to save in MongoDB
-    fetch("http://localhost:3000/api/pins", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(pinData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Pin saved:", data);
-
-        // Add a marker at the clicked location with the provided description
-        const marker = new google.maps.Marker({
-            position: clickLocation,
-            map: map,
-            title: description
+    try {
+        const response = await fetch("http://localhost:3000/api/pins", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`  // Include the JWT token in the request
+            },
+            body: JSON.stringify(pinData)
         });
 
-        // Attach an info window to display the description when the pin is clicked
-        const infoWindow = new google.maps.InfoWindow({
-            content: `<p>${description}</p>`
-        });
+        const data = await response.json();
 
-        marker.addListener("click", () => {
-            infoWindow.open(map, marker);
-        });
+        if (response.ok) {
+            console.log("Pin saved:", data);
 
-        // Close the modal after saving the pin
-        document.getElementById("pinModal").style.display = "none";
-    })
-    .catch(error => console.error("Error saving pin:", error));
+            // Add a marker at the clicked location with the provided description
+            const marker = new google.maps.Marker({
+                position: clickLocation,
+                map: map,
+                title: description
+            });
+
+            // Attach an info window to display the description when the pin is clicked
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<p>${description}</p>`
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+
+            // Close the modal after saving the pin
+            document.getElementById("pinModal").style.display = "none";
+        } else {
+            console.error("Error saving pin:", data.error);
+            alert("Error saving pin: " + data.error);
+        }
+
+    } catch (error) {
+        console.error("Error saving pin:", error);
+    }
+
+    // Reset the form
+    document.getElementById("pinForm").reset();
 });
 
 // Close About
