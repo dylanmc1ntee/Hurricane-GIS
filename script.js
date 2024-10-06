@@ -59,6 +59,7 @@ function fetchPins() {
 
 // Open the modal
 function openModal() {
+    closeAbout(); // closes About panel if open
     document.getElementById("pinModal").style.display = "block";
 }
 
@@ -112,4 +113,42 @@ document.getElementById("pinForm").addEventListener("submit", function(e) {
         document.getElementById("pinModal").style.display = "none";
     })
     .catch(error => console.error("Error saving pin:", error));
+});
+
+
+/* FOR STYLING */
+
+/* function openAboutPanel() {
+    const aboutPanel = document.getElementById('about-panel');
+    if (aboutPanel.style.display === 'none' || aboutPanel.style.display === '') {
+        aboutPanel.style.display = 'block';
+    } else {
+        aboutPanel.style.display = 'none';
+    }
+} */
+
+// Close About
+function closeAbout() {
+    const about = document.getElementById('about-panel');
+
+        about.style.transition = 'transform 0.3s ease'; 
+        about.style.transform = 'translateY(0)'; 
+
+}
+
+
+document.getElementById('about-toggle').addEventListener('click', function() {
+    const about = document.getElementById('about-panel');
+    
+    // Get current transform value
+    const currentTransform = getComputedStyle(about).transform;
+
+    // Check if the about panel is currently moved
+    if (currentTransform === 'none' || currentTransform === 'matrix(1, 0, 0, 1, 0, 0)') {
+        about.style.transition = 'transform 0.3s ease'; 
+        about.style.transform = 'translateY(14.6em)'; 
+    } else {
+        about.style.transition = 'transform 0.3s ease'; 
+        about.style.transform = 'translateY(0)'; 
+    }
 });
