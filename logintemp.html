@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HurricaneGIS</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="script.js" defer></script>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center; 
+                justify-content: center; 
+                height: 100vh;
+            }
+
+        </style>
+    </head>
+
+    <body > 
+        <br>
+        <h1>HurricaneGIS</h1>
+        <div class="container">
+            <!-- Tab links -->
+
+            <!-- Tab conent -->
+            <div id="login" class="tabcontent">
+                <h1>Log in</h1>
+                <form id="login" action="">
+                    <label>Username</label>
+                    <input type="text">
+                    <br>
+                    <label>Password</label>
+                    <input type="password">
+                    <span class="tablink" onclick="switchTab(event, 'register')">Not a user? Sign Up</span>                
+                    <br>
+                    <button type="submit">
+                        Log in
+                    </button>
+
+                </form>
+
+
+            </div>
+
+            <div id="register" class="tabcontent">
+                <h1>Create an account</h1>
+                <form id="login" action="">
+                    <label>Username</label>
+                    <input type="text">
+                    <br>
+                    <label>Password</label>
+                    <input type="password">
+                    <span class="tablink" onclick="switchTab(event, 'login')" id="defaultOpen">Already a user? Log in</span>
+                    <br>
+                    <button type="submit">
+                        Register
+                    </button>
+
+                </form>
+
+
+            </div>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("defaultOpen").click();
+            });
+        </script>
+    </body>
+</html>

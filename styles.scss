@@ -83,6 +83,7 @@ header {
                     border-radius: 1.5em;
                     border: none;
                     max-width: 50em;
+                    outline: none;
                 }
                 
 
@@ -250,13 +251,102 @@ main {
     
 }
 
+/* LOGIN PAGE STYLING */
+
+  
+.container {
+    padding: 2em;
+    background-color: $clr-modal-bg;
+    color: $clr-header-text;
+    margin-bottom: 3.5em;
+
+    border-radius: 3em;
+    max-width: 30em;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1em;
+    
+    span.tablink {
+        text-align: center;
+        text-decoration: underline;
+        color: rgb(0, 153, 255);
+
+        &:hover{
+            cursor: pointer;
+        }
+        
+    }
+
+    h1 { 
+        text-align: center;
+        font-size: 2em;
+        
+    } 
+
+    form {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: 0.75em;
+        padding: 1em;
+        width: 20em;
+
+
+
+        label {
+            font-size: 1.5em;
+            font-weight: 545;
+        }
+
+        input {
+            padding: 1em;
+            border-radius: 1.5em;
+            border: none;
+            width: 100%;
+            outline: none;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        button[type="submit"] {
+            margin:auto;
+            outline: none;
+            width: 50%;
+            padding: 0.5em 1em;
+            font-size: 1.3em;
+            border-radius: 1.3em;
+            text-align: center;
+            background-color: transparent;
+            color: $clr-header-text;
+            border: 2px solid $clr-header-text;
+            transition: color 0.3s ease; /* Smooth color transition */
+
+            &:hover {
+                background-color: $clr-header-text;
+                color: $clr-background;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+        }
+
+
+    }
+}
 
 
 /* Responsive styles */
 @media (max-width: 768px) {
 
     .modal-content {
-        width: 90%; /* Make modal a bit wider on small screens */
+        width: 90%; /* Make modal a bit wider on small screens */   
     }
 }
 
