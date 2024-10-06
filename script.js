@@ -15,6 +15,27 @@ function initMap() {
                     zoom: 15,
                 });
 
+                const locationInput = document.getElementById('location');
+                autocomplete = new google.maps.places.Autocomplete(locationInput);
+            
+                // When the user selects a place from the suggestions
+                autocomplete.addListener('place_changed', () => {
+                    const place = autocomplete.getPlace();
+            
+                    if (place.geometry) {
+                        // Move the map to the selected place
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(15); // Adjust zoom level
+                        new google.maps.Marker({
+                            position: place.geometry.location,
+                            map: map,
+                            title: place.formatted_address,
+                        });
+                    } else {
+                        alert('No details available for the selected place.');
+                    }
+                });
+
                 // Fetch and render pins from the database
                 fetchPins();
 
