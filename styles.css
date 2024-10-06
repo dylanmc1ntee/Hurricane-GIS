@@ -12,12 +12,10 @@ header {
   background-color: black;
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   color: white;
   padding: 1em 3em;
-  position: fixed;
-  z-index: 1;
+  z-index: 100;
   margin: 0;
 }
 header nav {
@@ -28,21 +26,40 @@ header nav .navbar {
   margin: 0;
   padding: 0;
   display: flex;
+  gap: 1.5em;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   width: 100%;
   font-size: 1.5em;
 }
-header nav .navbar #about-toggle:hover {
-  cursor: pointer;
+header nav .navbar #about-toggle {
+  color: white;
+  transition: color 0.2s ease;
+}
+header nav .navbar #about-toggle:hover, header nav .navbar #about-toggle:focus {
   color: rgb(150, 150, 150);
+  cursor: pointer;
+}
+header nav .navbar #signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+header nav .navbar #signin a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+header nav .navbar #signin a:hover {
+  color: rgb(150, 150, 150);
+  cursor: pointer;
 }
 header nav .navbar li .search {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1em;
-  max-width: 50em;
+  gap: 0.5em;
+  max-width: 400em;
 }
 header nav .navbar li .search .map-icon {
   font-size: 24px;
@@ -52,35 +69,30 @@ header nav .navbar li .search input {
   border-radius: 1.5em;
   border: none;
   max-width: 50em;
-}
-header #about-panel {
-  display: none;
+  outline: none;
 }
 
-.toggle-tab {
-  display: block;
+#about-panel {
   position: fixed;
-  border-radius: 0px 0px 10px 10px;
-  top: 4.65em;
-  right: calc(50% - 2em);
-  padding: 0.5em 1em;
-  background-color: rgba(0, 0, 0, 0.795);
+  padding: 1em 3em;
+  width: 100%;
+  color: white;
+  top: -10em;
+  background-color: rgba(0, 0, 0, 0.849);
+  display: block;
   z-index: 1;
-}
-.toggle-tab:hover {
-  cursor: pointer;
 }
 
 main {
   z-index: 0;
-  height: 100vh;
+  height: calc(100vh - 4.65em);
   width: 100%;
   position: relative;
   top: 0;
 }
 
 #map {
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 #map:hover {
@@ -111,7 +123,7 @@ main {
   justify-content: space-around;
   margin: auto; /* Center the modal */
   padding: 2em;
-  border: 1px solid rgba(0, 0, 0, 0.795);
+  border: 1px solid black;
   border-radius: 3em;
   max-width: 30em;
   position: relative; /* Ensure it stays within the bounds of the modal */
@@ -127,6 +139,10 @@ main {
   width: 100%;
   outline: none;
 }
+.modal-content form select {
+  padding: 0.5em;
+  border-radius: 1em;
+}
 .modal-content form label, .modal-content form label.input-float {
   margin-bottom: 0.3em;
   margin-right: 0.3em;
@@ -134,7 +150,7 @@ main {
   font-weight: 700;
 }
 .modal-content form textarea {
-  border-radius: 2em;
+  border-radius: 1.5em;
   padding: 1.3em 2em;
   width: 100%;
   resize: none;
@@ -153,10 +169,11 @@ main {
   background-color: transparent;
   color: white;
   border: 2px solid white;
+  transition: color 0.3s ease; /* Smooth color transition */
 }
 .modal-content form button[type=submit]:hover {
   background-color: white;
-  color: rgba(0, 0, 0, 0.795);
+  color: black;
   font-weight: bold;
   cursor: pointer;
 }
@@ -180,11 +197,77 @@ main {
   right: 1em;
   font-size: 28px;
   font-weight: bold;
-  transition: color 0.3s ease; /* Smooth color transition */
+  transition: color 0.3s ease;
 }
 .modal-content .close:hover, .modal-content .close:focus {
-  color: #f00; /* Change color on hover for better visibility */
+  color: #f00;
   text-decoration: none;
+  cursor: pointer;
+}
+
+/* LOGIN PAGE STYLING */
+.container {
+  padding: 2em;
+  background-color: rgba(0, 0, 0, 0.795);
+  color: white;
+  margin-bottom: 3.5em;
+  border-radius: 3em;
+  max-width: 30em;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 1em;
+}
+.tabcontent h1 {
+  align-self: center;
+}
+.tabcontent a {
+  color: rgb(0, 132, 255);
+}
+.tabcontent form {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 0.75em;
+  padding: 1em;
+  width: 20em;
+}
+.tabcontent form label {
+  font-size: 1.5em;
+  font-weight: 545;
+}
+.tabcontent form input {
+  padding: 1em;
+  border-radius: 1.5em;
+  border: none;
+  width: 100%;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.tabcontent form button[type=submit] {
+  margin: auto;
+  outline: none;
+  width: 50%;
+  padding: 0.5em 1em;
+  font-size: 1.3em;
+  border-radius: 1.3em;
+  text-align: center;
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+.tabcontent form button[type=submit]:hover {
+  background-color: white;
+  color: black;
+  font-weight: bold;
   cursor: pointer;
 }
 
