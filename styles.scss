@@ -14,6 +14,18 @@ body {
     margin: 0; 
     padding: 0; 
 }
+.gm-style .gm-style-iw-d {
+    width: 15em;
+
+}
+
+.gm-style-iw {
+    width: 15em;
+
+}
+.gm-ui-hover-effect {
+    width: 20px; height: 20px;
+}
 
 header {
     background-color: $clr-background; 
@@ -96,16 +108,23 @@ header {
 }
 
 #about-panel {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     position: fixed;
-    padding: 1em 3em; 
+    padding: 2em 3em; 
     width: 100%;
+    height: 100%;
     color: $clr-header-text;
-    top: -10em;
+    top: $header-height;
     background-color: $clr-about;
-    display: block;
+    display: none;
     z-index: 1;
+
+    div ul li {
+        margin-bottom: 0.5em;
+    }
 }
 
+/* MAP STYLES */
 
 main {
     z-index: 0;
@@ -118,15 +137,14 @@ main {
 
 #map {
     height: 100%; 
-    width: 100%;   
-
-    &:hover {
-        cursor: url('/images/pin.png'), auto;
-    }
+    width: 100%;  
 
 }
 
+
+
 /* Modal styles */
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */

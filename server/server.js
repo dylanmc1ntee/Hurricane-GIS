@@ -31,6 +31,7 @@ const pinSchema = new mongoose.Schema({
     lat: Number,
     lng: Number,
     description: String,
+    issueType: String,
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }  // Store reference to the user who added the pin
 });
 
@@ -43,6 +44,7 @@ app.post("/api/pins", authMiddleware, async (req, res) => {
             lat: req.body.lat,
             lng: req.body.lng,
             description: req.body.description,
+            issueType: req.body.issueType,
             userId: req.user._id  // Get user ID from the token, added by authMiddleware
         });
 

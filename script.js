@@ -1,5 +1,7 @@
 let map;
 let clickLocation; // Store the clicked location for later use
+let isToggled = false;
+
 
 function initMap() {
     if (navigator.geolocation) {
@@ -32,7 +34,6 @@ function initMap() {
         handleLocationError(false);
     }
 }
-
 function initAutocomplete() {
     const locationInput = document.getElementById('location');
     
@@ -85,7 +86,6 @@ function fetchPins() {
 
 // Open the modal
 function openModal() {
-    closeAbout(); // closes About panel if open
     document.getElementById("pinModal").style.display = "block";
 }
 
@@ -95,65 +95,80 @@ document.querySelector(".close").onclick = function() {
 };
 
 // Add event listener for the form submit event, not the button
-document.getElementById("pinForm").addEventListener("submit", function(e) {
+document.getElementById("pinForm").addEventListener("submit", async function(e) {
     e.preventDefault(); // Prevent form from submitting the traditional way
-    
+
+    // Ensure that the map click location is set before submitting
+    if (!clickLocation) {
+        alert("Please select a location on the map first.");
+        return;
+    }
+
     const description = document.getElementById("description").value; // Get description from modal
-    
+    const issueType = document.getElementById("issueType").value; // Get issue type from modal
+    const token = localStorage.getItem('token');  // Get JWT token from localStorage
+
+    // Check if user is authenticated
+    if (!token) {
+        alert('You need to log in before adding a pin.');
+        return;
+    }
+
     // Prepare the pin data
     const pinData = {
         lat: clickLocation.lat(),  // Use the clickLocation's latitude
         lng: clickLocation.lng(),  // Use the clickLocation's longitude
-        description: description   // Include the description entered in the modal
+        description: description,   // Include the description entered in the modal
+        issueType: issueType
     };
 
     // Send the pin data to the backend API to save in MongoDB
-    fetch("http://localhost:3000/api/pins", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(pinData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Pin saved:", data);
-
-        // Add a marker at the clicked location with the provided description
-        const marker = new google.maps.Marker({
-            position: clickLocation,
-            map: map,
-            title: description
+    try {
+        const response = await fetch("http://localhost:3000/api/pins", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`  // Include the JWT token in the request
+            },
+            body: JSON.stringify(pinData)
         });
 
-        // Attach an info window to display the description when the pin is clicked
-        const infoWindow = new google.maps.InfoWindow({
-            content: `<p>${description}</p>`
-        });
+        const data = await response.json();
 
-        marker.addListener("click", () => {
-            infoWindow.open(map, marker);
-        });
+        if (response.ok) {
+            console.log("Pin saved:", data);
 
-        // Close the modal after saving the pin
-        document.getElementById("pinModal").style.display = "none";
-    })
-    .catch(error => console.error("Error saving pin:", error));
+            // Add a marker at the clicked location with the provided description
+            const marker = new google.maps.Marker({
+                position: clickLocation,
+                map: map,
+                title: '${description} (${issueType})',
+            });
+
+            // Attach an info window to display the description when the pin is clicked
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<p><b>${issueType}</b> - ${description} </p>`
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+
+            // Close the modal after saving the pin
+            document.getElementById("pinModal").style.display = "none";
+        } else {
+            console.error("Error saving pin:", data.error);
+            alert("Error saving pin: " + data.error);
+        }
+
+    } catch (error) {
+        console.error("Error saving pin:", error);
+    }
+
+    // Reset the form
+    document.getElementById("pinForm").reset();
 });
 
-
-/* FOR STYLING */
-
-/* function openAboutPanel() {
-    const aboutPanel = document.getElementById('about-panel');
-    if (aboutPanel.style.display === 'none' || aboutPanel.style.display === '') {
-        aboutPanel.style.display = 'block';
-    } else {
-        aboutPanel.style.display = 'none';
-    }
-} */
-
-// Close About
 function closeAbout() {
     const about = document.getElementById('about-panel');
 
@@ -165,22 +180,14 @@ function closeAbout() {
 
 document.getElementById('about-toggle').addEventListener('click', function() {
     const about = document.getElementById('about-panel');
-    
-    // Get current transform value
-    const currentTransform = getComputedStyle(about).transform;
-
-    // Check if the about panel is currently moved
-    if (currentTransform === 'none' || currentTransform === 'matrix(1, 0, 0, 1, 0, 0)') {
-        about.style.transition = 'transform 0.3s ease'; 
-        about.style.transform = 'translateY(14.6em)'; 
-        setTimeout(() => {
-            about.style.zIndex = '1';
-        }, 300);
-    } else {
-        about.style.zIndex = '2';
-        about.style.transition = 'transform 0.3s ease'; 
-        about.style.transform = 'translateY(0)'; 
+    if (isToggled) {
+        
+        about.style.display = 'none';
     }
+    else {
+        about.style.display = 'block';
+    }
+    isToggled = !isToggled;
 });
 
 
@@ -205,4 +212,7 @@ function switchTab(evt, tab) {
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(tab).style.display = "block";
     evt.currentTarget.className += " active";
-  }
+}
+
+
+
