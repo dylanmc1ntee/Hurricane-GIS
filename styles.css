@@ -1,76 +1,56 @@
+/****** General Styles ******/
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
 }
 
-.gm-style .gm-style-iw-d {
-  width: 15em;
-}
-
-.gm-style-iw {
-  width: 15em;
-}
-
-.gm-ui-hover-effect {
-  width: 20px;
-  height: 20px;
-}
-
+/****** Header Styles ******/
 header {
   background-color: black;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   color: white;
-  padding: 1em 3em;
-  z-index: 100;
-  margin: 0;
-}
-header nav {
   width: 100%;
+  display: block;
+  padding: 1em 3em;
 }
 header nav .navbar {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  font-size: 1.5em;
+  width: 100%;
   display: flex;
-  gap: 1.5em;
+  list-style-type: none;
   align-items: center;
   justify-content: start;
-  width: 100%;
-  font-size: 1.5em;
+  gap: 1.5em;
 }
-header nav .navbar #about-toggle {
-  color: white;
+header nav .navbar li {
   transition: color 0.2s ease;
 }
-header nav .navbar #about-toggle:hover, header nav .navbar #about-toggle:focus {
+header nav .navbar li:hover, header nav .navbar li:focus {
   color: rgb(150, 150, 150);
   cursor: pointer;
 }
-header nav .navbar #signin {
+header nav .navbar .nav-pair {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-header nav .navbar #signin a {
+header nav .navbar .nav-pair a {
   color: white;
   text-decoration: none;
   transition: color 0.2s ease;
 }
-header nav .navbar #signin a:hover {
+header nav .navbar .nav-pair a:hover, header nav .navbar .nav-pair a:focus {
   color: rgb(150, 150, 150);
   cursor: pointer;
 }
 header nav .navbar li .search {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 0.5em;
   max-width: 400em;
 }
@@ -101,7 +81,7 @@ header nav .navbar li .search input {
   margin-bottom: 0.5em;
 }
 
-/* MAP STYLES */
+/****** Map Styles ******/
 main {
   z-index: 0;
   height: calc(100vh - 4.65em);
@@ -117,34 +97,31 @@ main {
 
 /* Modal styles */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  display: none;
+  position: fixed;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-  transition: opacity 0.3s ease; /* Smooth transition for modal */
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
 }
 
 .modal-content {
   background-color: rgba(0, 0, 0, 0.795);
   color: white;
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  margin: auto; /* Center the modal */
+  margin: auto;
   padding: 2em;
-  border: 1px solid black;
   border-radius: 3em;
   max-width: 30em;
-  position: relative; /* Ensure it stays within the bounds of the modal */
-  top: calc(50% + 3em);
-  transform: translateY(-50%); /* Center vertically */
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .modal-content form {
   display: flex;
@@ -213,18 +190,17 @@ main {
   right: 1em;
   font-size: 28px;
   font-weight: bold;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
 }
 .modal-content .close:hover, .modal-content .close:focus {
-  color: #f00;
-  text-decoration: none;
+  color: rgb(150, 150, 150);
   cursor: pointer;
 }
 
 /* LOGIN PAGE STYLING */
 .container {
   padding: 2em;
-  background-color: rgba(0, 0, 0, 0.795);
+  background-color: rgba(0, 0, 0, 0.4);
   color: white;
   margin-bottom: 3.5em;
   border-radius: 3em;
@@ -287,10 +263,4 @@ main {
   cursor: pointer;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  .modal-content {
-    width: 90%; /* Make modal a bit wider on small screens */
-  }
-}
 /*# sourceMappingURL=styles.css.map */

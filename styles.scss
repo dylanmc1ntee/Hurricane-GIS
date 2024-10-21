@@ -1,88 +1,74 @@
 $clr-background: black;
-$clr-modal-bg: rgba(0, 0, 0, 0.795);
+$clr-modal-form: rgba(0, 0, 0, 0.795);
+$clr-modal-bg: rgba(0, 0, 0, 0.4);
 $clr-header-text: white;
 $clr-text-hover: rgb(150, 150, 150);
-$header-height: 4.65em;
 $clr-about: rgba(0, 0, 0, 0.849);
 
+$header-height: 4.65em;
+
+
+@mixin flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@mixin hover-clr-transition {
+    transition: color 0.2s ease; 
+    &:hover,
+    &:focus {
+        color: $clr-text-hover;
+        cursor: pointer;
+    }
+}
+
+
+/****** General Styles ******/
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     font-family: Arial, sans-serif; 
-    margin: 0; 
-    padding: 0; 
-}
-.gm-style .gm-style-iw-d {
-    width: 15em;
-
 }
 
-.gm-style-iw {
-    width: 15em;
-
-}
-.gm-ui-hover-effect {
-    width: 20px; height: 20px;
-}
+/****** Header Styles ******/
 
 header {
     background-color: $clr-background; 
-    width: 100%;
-    display: flex;
-    flex-direction: column;
     color: $clr-header-text; 
+    width: 100%;
+    display: block;
     padding: 1em 3em; 
-    z-index: 100;
-    margin: 0;
 
     nav {
-        width: 100%;
-
         .navbar {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
+            font-size: 1.5em;
+            width: 100%;
             display: flex; 
-            gap: 1.5em;
+            list-style-type: none;
             align-items: center;
             justify-content: start; 
-            width: 100%;
-            font-size: 1.5em;
+            gap: 1.5em;
 
-            #about-toggle {
-                color: $clr-header-text;
-                transition: color 0.2s ease; 
-        
-                &:hover,
-                &:focus {
-                    color: $clr-text-hover;
-                    cursor: pointer;
-                }
-            }
+            li { @include hover-clr-transition(); }
 
-            #signin{
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            .nav-pair{
+                @include flex-centered();
+                
                 a {
                     color: white;
                     text-decoration: none;
-                    transition: color 0.2s ease; 
-
-                    &:hover {
-                        color: $clr-text-hover;
-                        cursor: pointer;
-                    }
+                    @include hover-clr-transition();
                 }
-
             }
 
-            li .search {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            li .search {                
+                @include flex-centered();
                 gap: 0.5em;
                 max-width: 400em;
 
@@ -97,15 +83,10 @@ header {
                     max-width: 50em;
                     outline: none;
                 }
-                
-
             }
-            
-        }
-
-
-    }
-}
+        }//end of .navbar
+    }//end of nav
+}//end of header
 
 #about-panel {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -124,7 +105,8 @@ header {
     }
 }
 
-/* MAP STYLES */
+/****** Map Styles ******/
+
 
 main {
     z-index: 0;
@@ -132,7 +114,6 @@ main {
     width: 100%;
     position: relative;
     top: 0;
-
 }
 
 #map {
@@ -146,34 +127,32 @@ main {
 /* Modal styles */
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    background-color: $clr-modal-bg; 
+    z-index: 1; 
+    display: none; 
+    position: fixed; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-    transition: opacity 0.3s ease; /* Smooth transition for modal */
+    width: 100%; 
+    height: 100%; 
+    transition: opacity 0.3s ease; 
 }
 
 .modal-content {
-    background-color: $clr-modal-bg;
+    background-color: $clr-modal-form;
     color: $clr-header-text;
+    border: 1px solid $clr-background;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    margin: auto; /* Center the modal */
+    margin: auto; 
     padding: 2em;
-    border: 1px solid $clr-background;
     border-radius: 3em;
     max-width: 30em;
-    position: relative; /* Ensure it stays within the bounds of the modal */
-    top: calc(50% + 3em);
-    transform: translateY(-50%); /* Center vertically */
+    position: relative; 
+    top: 50%;
+    transform: translateY(-50%); 
 
     form {
         display: flex;
@@ -255,22 +234,12 @@ main {
         right: 1em;
         font-size: 28px;
         font-weight: bold;
-        transition: color 0.3s ease; 
-        
-        &:hover,
-        &:focus {
-            color: #f00; 
-            text-decoration: none;
-            cursor: pointer;
-        }
-    
+        @include hover-clr-transition();
     }
-    
     
 }
 
 /* LOGIN PAGE STYLING */
-
   
 .container {
     padding: 2em;
@@ -348,15 +317,6 @@ main {
         }
 
 
-    }
-}
-
-
-/* Responsive styles */
-@media (max-width: 768px) {
-
-    .modal-content {
-        width: 90%; /* Make modal a bit wider on small screens */   
     }
 }
 
